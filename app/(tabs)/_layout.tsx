@@ -18,6 +18,7 @@ export default function TabLayout() {
                 name="index"
                 options={{
                     title: 'Home',
+
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon
                             name={focused ? 'home' : 'home-outline'}

@@ -1,27 +1,24 @@
 // External packages
 import * as React from 'react';
-import { MyButton } from '@/components/Button';
-import { CustomText } from '@/components/CustomText';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StyleSheet, TextInput, View } from 'react-native';
-
+import { Divider } from 'react-native-paper';
+import { Image } from 'react-native';
 // Components and variables
 import { FONT_BASE, FONT_MD, FONT_XL } from '@/constants/FontSizes';
 import { LIGHT_WHITE, WHITE } from '@/constants/Colors';
-import { RADIUS_LG } from '@/constants/BorderRadiusSizes';
+import { RADIUS_LG, RADIUS_FULL } from '@/constants/BorderRadiusSizes';
+import { CustomText } from '@/components/CustomText';
+import { MyButton } from '@/components/Button';
+
+// Assets
 
 export default function TabTwoScreen() {
     const [inputValue, setInputValue] = React.useState('');
     return (
         <SafeAreaView style={styles.mainContainer}>
             <CustomText style={{ fontSize: FONT_XL }}>Log in</CustomText>
-            <CustomText
-                style={{
-                    fontSize: FONT_BASE,
-                    color: LIGHT_WHITE,
-                    marginTop: 16,
-                }}
-            >
+            <CustomText style={styles.subheading}>
                 Welcome back! Please enter your details.
             </CustomText>
 
@@ -30,21 +27,19 @@ export default function TabTwoScreen() {
                 <TextInput
                     style={styles.input}
                     placeholder="Enter your email"
-                    placeholderTextColor={LIGHT_WHITE} // Semi-transparent white placeholder
+                    placeholderTextColor={LIGHT_WHITE}
                     value={inputValue}
                     onChangeText={(text) => setInputValue(text)}
-                    selectionColor="#fff" // White cursor
                 />
             </View>
             <View style={styles.inputContainer}>
                 <CustomText style={{ fontSize: FONT_MD }}>Password</CustomText>
                 <TextInput
                     style={styles.input}
-                    placeholder="*****" // Updated placeholder text for clarity
-                    placeholderTextColor={LIGHT_WHITE} // Semi-transparent white placeholder
+                    placeholder="*****"
+                    placeholderTextColor={LIGHT_WHITE}
                     value={inputValue}
                     onChangeText={(text) => setInputValue(text)}
-                    selectionColor="#fff" // White cursor
                 />
             </View>
             <MyButton
@@ -57,11 +52,39 @@ export default function TabTwoScreen() {
             >
                 Log in
             </MyButton>
+            <View style={styles.seperatorContainer}>
+                <Divider style={{ flex: 1 }} />
+                <CustomText style={{ color: LIGHT_WHITE }}>or</CustomText>
+                <Divider style={{ flex: 1 }} />
+            </View>
+            <MyButton
+                variant="solid"
+                buttonColor="indigo"
+                onPress={() => console.log('Hello world')}
+                iconLeft={
+                    <Image
+                        source={require('../../assets/images/GoogleLogo.png')}
+                        style={{
+                            objectFit: 'cover',
+                            borderRadius: RADIUS_FULL,
+                            width: 32,
+                            height: 32,
+                        }}
+                    />
+                }
+            >
+                Log in with google
+            </MyButton>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    subheading: {
+        fontSize: FONT_BASE,
+        color: LIGHT_WHITE,
+        marginTop: 16,
+    },
     mainContainer: {
         paddingHorizontal: 24,
         flex: 1,
@@ -69,11 +92,11 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginTop: 24,
-        width: '100%', // Ensure the input container takes full width
+        width: '100%',
     },
     input: {
         height: 50,
-        width: '100%', // Make the input field take full width
+        width: '100%',
         padding: 10,
         borderWidth: 2,
         borderColor: WHITE,
@@ -81,5 +104,11 @@ const styles = StyleSheet.create({
         color: WHITE,
         fontSize: FONT_BASE,
         marginTop: 12,
+    },
+    seperatorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        marginVertical: 24,
     },
 });

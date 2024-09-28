@@ -14,7 +14,17 @@ export const MyButton: React.FC<{
     buttonColor: 'pink' | 'indigo';
     variant: 'solid' | 'outline';
     style?: object;
-}> = ({ children, buttonColor, style, variant, onPress }) => (
+    iconLeft?: React.ReactNode;
+    iconRight?: React.ReactNode;
+}> = ({
+    iconLeft,
+    iconRight,
+    children,
+    buttonColor,
+    style,
+    variant,
+    onPress,
+}) => (
     <TouchableOpacity
         onPress={onPress}
         style={[
@@ -34,6 +44,7 @@ export const MyButton: React.FC<{
             style,
         ]}
     >
+        {iconLeft}
         <CustomText
             style={{
                 color:
@@ -48,6 +59,7 @@ export const MyButton: React.FC<{
         >
             {children}
         </CustomText>
+        {iconRight}
     </TouchableOpacity>
 );
 
@@ -55,7 +67,8 @@ const styles = StyleSheet.create({
     buttonDefault: {
         borderRadius: RADIUS_LG,
         height: 64,
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         borderWidth: 1,
         paddingHorizontal: 16,

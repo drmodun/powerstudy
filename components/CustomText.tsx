@@ -41,6 +41,6 @@ export const CustomText = (
 const styles = StyleSheet.create({
     text: {
         fontSize: 16,
-        color: WHITE,
+        color: WHITE, // Note, fix this when changing themes, I only put this for demo puropeses
     },
 });
