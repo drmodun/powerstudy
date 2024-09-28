@@ -13,10 +13,11 @@ export default function TabTwoScreen() {
         <View>
             <Text>Hello world</Text>
             <MyButton
-                mode="outlined"
+                variant="solid"
+                buttonColor="pink"
                 onPress={() => console.log('Hello world')}
             >
-                sds
+                sss
             </MyButton>
             {/* <TextInput label="Password" /> */}
         </View>
