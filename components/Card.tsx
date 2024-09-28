@@ -45,7 +45,7 @@ export function Card({
 const styles = StyleSheet.create({
   wrapper: {
     minHeight: 64,
-    borderRadius: 12,
+    borderRadius: 8,
     paddingHorizontal: 32,
     paddingVertical: 32,
     display: "flex",
