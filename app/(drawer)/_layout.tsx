@@ -1,27 +1,13 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Button,
-} from "react-native";
-import React, { useEffect } from "react";
-import { Drawer } from "expo-router/drawer";
-import {
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerToggleButton,
-} from "@react-navigation/drawer";
-import { Feather } from "@expo/vector-icons";
-import { router, useNavigation, usePathname } from "expo-router";
-import { INDIGO, LIGHT_PURPLE, PURPLE, ROSE } from "@/constants/Colors";
-import { CustomText } from "@/components/CustomText";
-import UserPage from "./user";
-import Constants from "expo-constants";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { TouchableHighlight } from "react-native-gesture-handler";
-const imagePath = require("../../assets/images/mini_fullwhite.png");
+import { View, StyleSheet, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { Drawer } from 'expo-router/drawer';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { router, usePathname } from 'expo-router';
+import { INDIGO, ROSE } from '@/constants/Colors';
+import { CustomText } from '@/components/CustomText';
+import Constants from 'expo-constants';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const CustomDrawerContent = (props) => {
   const pathname = usePathname();
@@ -34,7 +20,7 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView {...props} style={styles.drawer}>
       <View style={styles.userInfoWrapper}>
         <Image
-          source={{ uri: "https://randomuser.me/api/portraits/women/26.jpg" }}
+          source={{ uri: 'https://randomuser.me/api/portraits/women/26.jpg' }}
           width={80}
           height={80}
           style={styles.userImg}
@@ -47,27 +33,27 @@ const CustomDrawerContent = (props) => {
 
       <DrawerItem
         icon={({ color, size }) => (
-          <MaterialIcons name="home" size={size} color={"white"} />
+          <MaterialIcons name="home" size={size} color={'white'} />
         )}
-        label={"Home"}
+        label={'Home'}
         labelStyle={[styles.navItemLabel]}
-        style={{ backgroundColor: pathname == "/" ? ROSE : INDIGO }}
+        style={{ backgroundColor: pathname == '/' ? ROSE : INDIGO }}
         onPress={() => {
-          router.push("/(tabs)");
+          router.push('/(tabs)');
         }}
       />
 
       <DrawerItem
         icon={({ color, size }) => (
-          <MaterialIcons name="account-circle" size={size} color={"white"} />
+          <MaterialIcons name="account-circle" size={size} color={'white'} />
         )}
-        label={"User info"}
+        label={'User info'}
         labelStyle={[styles.navItemLabel]}
         style={{
-          backgroundColor: pathname == "/user" ? ROSE : INDIGO,
+          backgroundColor: pathname == '/user' ? ROSE : INDIGO,
         }}
         onPress={() => {
-          router.push("/user");
+          router.push('/user');
         }}
       />
     </DrawerContentScrollView>
@@ -78,7 +64,7 @@ export default function Layout() {
   return (
     <Drawer
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{ headerShown: false, drawerPosition: "right" }}
+      screenOptions={{ headerShown: false, drawerPosition: 'right' }}
     >
       <Drawer.Screen
         name="(tabs)"
@@ -99,10 +85,10 @@ export default function Layout() {
                 backgroundColor: INDIGO,
                 borderRadius: 8,
                 height: 64,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
                 paddingHorizontal: 16,
                 marginHorizontal: 8,
                 width: 64,
@@ -124,13 +110,13 @@ export default function Layout() {
 const styles = StyleSheet.create({
   navItemLabel: {
     marginLeft: -20,
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontFamily: "Outfit_400Regular",
+    fontFamily: 'Outfit_400Regular',
   },
   userInfoWrapper: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginBottom: 16,
     marginHorizontal: 8,
     gap: 8,
@@ -142,16 +128,16 @@ const styles = StyleSheet.create({
     borderRadius: 999,
   },
   userDetailsWrapper: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   userName: {
-    color: "white",
-    fontFamily: "Outfit_500Medium",
+    color: 'white',
+    fontFamily: 'Outfit_500Medium',
   },
   userEmail: {
-    color: "white",
+    color: 'white',
   },
   drawer: {
     paddingHorizontal: 8,

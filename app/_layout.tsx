@@ -3,15 +3,15 @@ import {
   DefaultTheme,
   Theme,
   ThemeProvider,
-} from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import "react-native-reanimated";
+} from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
 
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { BLACK, INDIGO, ROSE } from "@/constants/Colors";
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { BLACK, INDIGO, ROSE } from '@/constants/Colors';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,8 +24,8 @@ export default function RootLayout() {
       primary: ROSE,
       background: BLACK,
       card: BLACK,
-      text: "white",
-      border: "white",
+      text: 'white',
+      border: 'white',
       notification: INDIGO,
     },
   };
