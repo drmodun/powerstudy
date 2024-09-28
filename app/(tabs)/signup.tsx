@@ -1,17 +1,17 @@
 // External packages
 import * as React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import { Image } from 'react-native';
+
 // Components and variables
 import { FONT_BASE, FONT_MD, FONT_XL } from '@/constants/FontSizes';
 import { LIGHT_WHITE, WHITE } from '@/constants/Colors';
 import { RADIUS_LG, RADIUS_FULL } from '@/constants/BorderRadiusSizes';
 import { CustomText } from '@/components/CustomText';
 import { MyButton } from '@/components/Button';
-
-// Assets
+import { MyInput } from '@/components/Input';
 
 export default function TabTwoScreen() {
     const [inputValue, setInputValue] = React.useState('');
@@ -22,36 +22,25 @@ export default function TabTwoScreen() {
                 Welcome! Please enter your details.
             </CustomText>
 
-            <View style={styles.inputContainer}>
-                <CustomText style={{ fontSize: FONT_MD }}>Username</CustomText>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your username"
-                    placeholderTextColor={LIGHT_WHITE}
-                    value={inputValue}
-                    onChangeText={(text) => setInputValue(text)}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <CustomText style={{ fontSize: FONT_MD }}>Email</CustomText>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your email"
-                    placeholderTextColor={LIGHT_WHITE}
-                    value={inputValue}
-                    onChangeText={(text) => setInputValue(text)}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <CustomText style={{ fontSize: FONT_MD }}>Password</CustomText>
-                <TextInput
-                    style={styles.input}
-                    placeholder="*****"
-                    placeholderTextColor={LIGHT_WHITE}
-                    value={inputValue}
-                    onChangeText={(text) => setInputValue(text)}
-                />
-            </View>
+            <MyInput
+                label="Username"
+                placeholderValue="Enter your username"
+                value={inputValue}
+                setValue={setInputValue}
+            />
+            <MyInput
+                label="Email"
+                placeholderValue="Enter your email"
+                value={inputValue}
+                setValue={setInputValue}
+            />
+            <MyInput
+                label="Password"
+                placeholderValue="Enter your password"
+                value={inputValue}
+                setValue={setInputValue}
+            />
+
             <MyButton
                 variant="solid"
                 buttonColor="indigo"
@@ -85,6 +74,10 @@ export default function TabTwoScreen() {
             >
                 Log in with google
             </MyButton>
+            <CustomText style={{ color: LIGHT_WHITE, marginTop: 24 }}>
+                Don't have an account? Sign in
+                {/* Add link on sign up */}
+            </CustomText>
         </SafeAreaView>
     );
 }

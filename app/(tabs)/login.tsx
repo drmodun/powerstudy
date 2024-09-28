@@ -10,11 +10,11 @@ import { LIGHT_WHITE, WHITE } from '@/constants/Colors';
 import { RADIUS_LG, RADIUS_FULL } from '@/constants/BorderRadiusSizes';
 import { CustomText } from '@/components/CustomText';
 import { MyButton } from '@/components/Button';
-
+import { MyInput } from '@/components/Input';
 // Assets
 
 export default function TabTwoScreen() {
-    const [inputValue, setInputValue] = React.useState('');
+    const [inputValue, setInputValue] = React.useState<string>(''); // Change states later when Jan finshes, leave this for now
     return (
         <SafeAreaView style={styles.mainContainer}>
             <CustomText style={{ fontSize: FONT_XL }}>Log in</CustomText>
@@ -22,26 +22,19 @@ export default function TabTwoScreen() {
                 Welcome back! Please enter your details.
             </CustomText>
 
-            <View style={styles.inputContainer}>
-                <CustomText style={{ fontSize: FONT_MD }}>Email</CustomText>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your email"
-                    placeholderTextColor={LIGHT_WHITE}
-                    value={inputValue}
-                    onChangeText={(text) => setInputValue(text)}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <CustomText style={{ fontSize: FONT_MD }}>Password</CustomText>
-                <TextInput
-                    style={styles.input}
-                    placeholder="*****"
-                    placeholderTextColor={LIGHT_WHITE}
-                    value={inputValue}
-                    onChangeText={(text) => setInputValue(text)}
-                />
-            </View>
+            <MyInput
+                label="Email"
+                placeholderValue="Enter your email"
+                value={inputValue}
+                setValue={setInputValue}
+            />
+            <MyInput
+                label="Password"
+                placeholderValue="*******"
+                value={inputValue}
+                setValue={setInputValue}
+            />
+
             <MyButton
                 variant="solid"
                 buttonColor="pink"
@@ -75,6 +68,10 @@ export default function TabTwoScreen() {
             >
                 Log in with google
             </MyButton>
+            <CustomText style={{ color: LIGHT_WHITE, marginTop: 24 }}>
+                Already have an accout? Sign up
+                {/* Add link on sign up */}
+            </CustomText>
         </SafeAreaView>
     );
 }
