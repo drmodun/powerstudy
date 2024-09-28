@@ -1,31 +1,85 @@
 // External packages
-import { MyButton } from '@/components/Button';
 import * as React from 'react';
+import { MyButton } from '@/components/Button';
+import { CustomText } from '@/components/CustomText';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet, TextInput, View } from 'react-native';
 
-import { StyleSheet, Text, View } from 'react-native';
-
-// Components
-import { TextInput } from 'react-native-paper';
+// Components and variables
+import { FONT_BASE, FONT_MD, FONT_XL } from '@/constants/FontSizes';
+import { LIGHT_WHITE, WHITE } from '@/constants/Colors';
+import { RADIUS_LG } from '@/constants/BorderRadiusSizes';
 
 export default function TabTwoScreen() {
-    const [text, setText] = React.useState('');
+    const [inputValue, setInputValue] = React.useState('');
     return (
-        <View>
-            <Text>Hello world</Text>
+        <SafeAreaView style={styles.mainContainer}>
+            <CustomText style={{ fontSize: FONT_XL }}>Log in</CustomText>
+            <CustomText
+                style={{
+                    fontSize: FONT_BASE,
+                    color: LIGHT_WHITE,
+                    marginTop: 16,
+                }}
+            >
+                Welcome back! Please enter your details.
+            </CustomText>
+
+            <View style={styles.inputContainer}>
+                <CustomText style={{ fontSize: FONT_MD }}>Email</CustomText>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter your email"
+                    placeholderTextColor={LIGHT_WHITE} // Semi-transparent white placeholder
+                    value={inputValue}
+                    onChangeText={(text) => setInputValue(text)}
+                    selectionColor="#fff" // White cursor
+                />
+            </View>
+            <View style={styles.inputContainer}>
+                <CustomText style={{ fontSize: FONT_MD }}>Password</CustomText>
+                <TextInput
+                    style={styles.input}
+                    placeholder="*****" // Updated placeholder text for clarity
+                    placeholderTextColor={LIGHT_WHITE} // Semi-transparent white placeholder
+                    value={inputValue}
+                    onChangeText={(text) => setInputValue(text)}
+                    selectionColor="#fff" // White cursor
+                />
+            </View>
             <MyButton
                 variant="solid"
                 buttonColor="pink"
+                style={{
+                    marginTop: 40,
+                }}
                 onPress={() => console.log('Hello world')}
             >
-                sss
+                Log in
             </MyButton>
-            {/* <TextInput label="Password" /> */}
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    button: {
-        borderRadius: 5,
+    mainContainer: {
+        paddingHorizontal: 24,
+        flex: 1,
+        justifyContent: 'center',
+    },
+    inputContainer: {
+        marginTop: 24,
+        width: '100%', // Ensure the input container takes full width
+    },
+    input: {
+        height: 50,
+        width: '100%', // Make the input field take full width
+        padding: 10,
+        borderWidth: 2,
+        borderColor: WHITE,
+        borderRadius: RADIUS_LG,
+        color: WHITE,
+        fontSize: FONT_BASE,
+        marginTop: 12,
     },
 });

@@ -9,6 +9,9 @@ import {
 } from '@expo-google-fonts/outfit';
 import { StyleSheet, Text, TextProps } from 'react-native';
 
+// Components and Variables
+import { WHITE } from '@/constants/Colors';
+
 export const CustomText = (
     props: JSX.IntrinsicAttributes &
         JSX.IntrinsicClassAttributes<Text> &
@@ -38,5 +41,6 @@ export const CustomText = (
 const styles = StyleSheet.create({
     text: {
         fontSize: 16,
+        color: WHITE,
     },
 });
