@@ -853,6 +853,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/outfit@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/outfit/-/outfit-0.2.3.tgz#63d7acd2c96f5a9763a20d64dab5ae68b54eac6a"
+  integrity sha512-uLW3n6WwtrF33IBDyuHKPgBNcJKe3O8+YXS1f7SLYdb5jEgXP2udNzzhmiw7OYvIAjfS+XDOw0uTELSB36VzOQ==
+
 "@expo/bunyan@^4.0.0":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@expo/bunyan/-/bunyan-4.0.1.tgz#ab9e17e36c71c704a0ce72168378a487368da736"
@@ -3806,7 +3811,7 @@ expo-file-system@~17.0.1:
   resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-17.0.1.tgz#b9f8af8c1c06ec71d96fd7a0d2567fa9e1c88f15"
   integrity sha512-dYpnZJqTGj6HCYJyXAgpFkQWsiCH3HY1ek2cFZVHFoEc5tLz9gmdEgTF6nFHurvmvfmXqxi7a5CXyVm0aFYJBw==
 
-expo-font@~12.0.10, expo-font@~12.0.9:
+expo-font@~12.0.10:
   version "12.0.10"
   resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-12.0.10.tgz#62deaf1f46159d7839f01305f44079268781b1db"
   integrity sha512-Q1i2NuYri3jy32zdnBaHHCya1wH1yMAsI+3CCmj9zlQzlhsS9Bdwcj2W3c5eU5FvH2hsNQy4O+O1NnM6o/pDaQ==
