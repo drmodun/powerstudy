@@ -28,13 +28,16 @@ export default function HomeScreen() {
 
       if (!authToken) signOut();
 
-      let res = await fetch(`http://192.168.1.206:5500/notes/${note}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      let res = await fetch(
+        `https://powerstudy-backend.vercel.app/notes/${note}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
       res = await res.json();
       res['content'] = res['content'].replace(/\\n/g, '\n');
       setNotes(res);

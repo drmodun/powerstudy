@@ -29,7 +29,7 @@ export default function HomeScreen() {
       if (!authToken) signOut();
 
       let res = await fetch(
-        'http://192.168.1.206:5500/knowledge-bases?' +
+        'https://powerstudy-backend.vercel.app/knowledge-bases?' +
           new URLSearchParams({
             subject: subject,
           }).toString(),
