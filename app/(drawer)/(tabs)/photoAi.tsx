@@ -1,17 +1,56 @@
 // External Packages
-import { StyleSheet, View } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Components and variables
 import { RADIUS_2XL, RADIUS_LG } from '@/constants/BorderRadiusSizes';
 import { INDIGO, ROSE } from '@/constants/Colors';
 import { CustomText } from '@/components/CustomText';
 import { FONT_LG, FONT_XL } from '@/constants/FontSizes';
+import { useCntx } from '@/hooks/useAppContext';
 
 export default function Scan() {
+  const { mathImage } = useCntx();
+  console.log(mathImage);
+  const getUserId = async () => {
+    const authToken = await AsyncStorage.getItem('access_token');
+
+    if (!mathImage) return;
+
+    const filename: any = mathImage.split('/').pop();
+    const formImageProblem = new FormData();
+    formImageProblem.append('files', {
+      uri: mathImage,
+      name: filename,
+      type: 'image/jpeg',
+    });
+
+    const sendImage = await fetch('http://192.168.1.117:5500/math-problems', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formImageProblem,
+    });
+    const getImage = await sendImage.json();
+    console.log(getImage);
+  };
+
   return (
     <ScrollView style={styles.wrapper}>
-      <View style={styles.imageContainer}></View>
+      <View style={styles.imageContainer}>
+        {mathImage && (
+          <Image
+            source={{
+              uri: mathImage,
+            }}
+            style={{ flex: 1 }}
+          />
+        )}
+      </View>
       <View style={styles.solutionContainer}>
         <View style={styles.solutionLabel}>
           <CustomText style={{ fontSize: FONT_XL, fontWeight: 'bold' }}>
@@ -19,7 +58,9 @@ export default function Scan() {
           </CustomText>
         </View>
         <ScrollView style={styles.solution}>
-          <CustomText style={{ fontSize: FONT_LG }}>lorem</CustomText>
+          <TouchableOpacity onPress={getUserId}>
+            <CustomText style={{ fontSize: FONT_LG }}>lorem</CustomText>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </ScrollView>

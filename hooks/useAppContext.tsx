@@ -7,7 +7,7 @@ export const AppContext = ({ children }: any) => {
   const [email, setEmail] = React.useState('');
   const [profilePicture, setProfilePicture] = React.useState('');
   const [id, setId] = React.useState('');
-
+  const [mathImage, setMathImage] = React.useState<string>('');
   return (
     <Cntx.Provider
       value={{
@@ -19,6 +19,8 @@ export const AppContext = ({ children }: any) => {
         setProfilePicture,
         id,
         setId,
+        mathImage,
+        setMathImage,
       }}
     >
       {children}
@@ -39,4 +41,5 @@ export const clearContext = (context: any) => {
   context.setEmail('');
   context.setProfilePicture('');
   context.setId('');
+  context.setMathImage('');
 };
