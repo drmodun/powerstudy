@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { signOut } from '@/functions/auth';
 import { clearContext, useCntx } from '@/hooks/useAppContext';
 
-const CustomDrawerContent = (props) => {
+const CustomDrawerContent = (props: any) => {
   const pathname = usePathname();
   const context = useCntx();
 

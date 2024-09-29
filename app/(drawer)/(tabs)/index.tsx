@@ -1,12 +1,5 @@
 import { Card } from '@/components/Card';
-import {
-  Image,
-  StyleSheet,
-  Platform,
-  SafeAreaView,
-  View,
-  Text,
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { INDIGO, LIGHT_PURPLE, PURPLE } from '@/constants/Colors';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useEffect } from 'react';
@@ -23,7 +16,7 @@ export default function HomeScreen() {
 
       if (!authToken) signOut();
 
-      let res = await fetch('http://192.168.1.206:5500/auth/me', {
+      let res: any = await fetch('http://192.168.1.117:5500/auth/me', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -39,13 +32,16 @@ export default function HomeScreen() {
         await AsyncStorage.setItem('email', res['email']);
         context.setEmail(res['email']);
 
-        let res2 = await fetch(`http://192.168.1.206:5500/users/${res['id']}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        let res2: any = await fetch(
+          `http://192.168.1.117:5500/users/${res['id']}`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
         res2 = await res2.json();
 
         if (res2['name']) {
@@ -70,11 +66,13 @@ export default function HomeScreen() {
           icon="summarize"
           style={{ backgroundColor: INDIGO }}
         />
-        <Card
-          text="Scan math problems"
-          icon="calculate"
-          style={{ backgroundColor: PURPLE }}
-        />
+        <TouchableOpacity>
+          <Card
+            text="Scan math problems"
+            icon="calculate"
+            style={{ backgroundColor: PURPLE }}
+          />
+        </TouchableOpacity>
         <Card
           text="Chat to our AI for help"
           icon="chat"

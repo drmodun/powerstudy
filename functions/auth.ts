@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
 
 export const handleLogin = (email: string, password: string) => {
-  fetch('http://192.168.1.206:5500/auth/login', {
+  fetch('http://192.168.1.117:5500/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const register = async (
   email: string,
   password: string
 ) => {
-  fetch('http://192.168.1.206:5500/users', {
+  fetch('http://192.168.1.117:5500/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
