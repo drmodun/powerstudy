@@ -6,6 +6,7 @@ import { Divider } from 'react-native-paper';
 import { Image } from 'react-native';
 import { Link, router } from 'expo-router';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Components and variables
 import { FONT_BASE, FONT_MD, FONT_XL } from '@/constants/FontSizes';
@@ -14,45 +15,11 @@ import { RADIUS_LG, RADIUS_FULL } from '@/constants/BorderRadiusSizes';
 import { CustomText } from '@/components/CustomText';
 import { MyButton } from '@/components/Button';
 import { MyInput } from '@/components/Input';
+import { handleLogin } from '@/functions/auth';
 
 export default function Login() {
   const [emailValue, setEmailValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
-
-  const handleLogin = () => {
-    fetch('http://192.168.1.206:5500/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: emailValue,
-        password: passwordValue,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 201) {
-          router.push('/(drawer)/(tabs)/');
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Invalid credentials. Please check your email and password.',
-          });
-        }
-      })
-      .catch(function (error) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2:
-            'An error occurred while logging in. Try again in a few moments.',
-        });
-
-        throw error;
-      });
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.mainContainer}>
@@ -74,6 +41,7 @@ export default function Login() {
         value={passwordValue}
         setValue={setPasswordValue}
         style={styles.input}
+        type="password"
       />
 
       <MyButton
@@ -82,13 +50,12 @@ export default function Login() {
         style={{
           marginTop: 32,
         }}
-        onPress={handleLogin}
+        onPress={() => handleLogin(emailValue, passwordValue)}
       >
         Log in
       </MyButton>
       <CustomText style={{ color: LIGHT_WHITE, marginTop: 16 }}>
-        Don't have an account?{' '}
-        <Link href="/(drawer)/(tabs)/signup">Sign up.</Link>
+        Don't have an account? <Link href="/signup">Sign up.</Link>
       </CustomText>
     </ScrollView>
   );

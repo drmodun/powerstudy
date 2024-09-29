@@ -1,5 +1,5 @@
 import { View, StyleSheet, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Drawer } from 'expo-router/drawer';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { router, usePathname } from 'expo-router';
@@ -8,26 +8,30 @@ import { CustomText } from '@/components/CustomText';
 import Constants from 'expo-constants';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { TouchableHighlight } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { signOut } from '@/functions/auth';
+import { clearContext, useCntx } from '@/hooks/useAppContext';
 
 const CustomDrawerContent = (props) => {
   const pathname = usePathname();
-
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
+  const context = useCntx();
 
   return (
     <DrawerContentScrollView {...props} style={styles.drawer}>
       <View style={styles.userInfoWrapper}>
         <Image
-          source={{ uri: 'https://randomuser.me/api/portraits/women/26.jpg' }}
+          source={{
+            uri: !context.profilePicture
+              ? 'https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2220431045.jpg'
+              : profilePicture,
+          }}
           width={80}
           height={80}
           style={styles.userImg}
         />
         <View style={styles.userDetailsWrapper}>
-          <CustomText style={styles.userName}>John Doe</CustomText>
-          <CustomText style={styles.userEmail}>john@email.com</CustomText>
+          <CustomText style={styles.userName}>{context.username}</CustomText>
+          <CustomText style={styles.userEmail}>{context.email}</CustomText>
         </View>
       </View>
 
@@ -54,6 +58,21 @@ const CustomDrawerContent = (props) => {
         }}
         onPress={() => {
           router.push('/user');
+        }}
+      />
+
+      <DrawerItem
+        icon={({ color, size }) => (
+          <MaterialIcons name="logout" size={size} color={'white'} />
+        )}
+        label={'Sign out'}
+        labelStyle={[styles.navItemLabel]}
+        style={{
+          backgroundColor: INDIGO,
+        }}
+        onPress={() => {
+          signOut();
+          clearContext(context);
         }}
       />
     </DrawerContentScrollView>

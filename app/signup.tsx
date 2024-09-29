@@ -11,49 +11,12 @@ import { RADIUS_LG, RADIUS_FULL } from '@/constants/BorderRadiusSizes';
 import { CustomText } from '@/components/CustomText';
 import { MyButton } from '@/components/Button';
 import { MyInput } from '@/components/Input';
+import { register } from '@/functions/auth';
 
 export default function SignUp() {
   const [usernameValue, setUsernameValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
   const [emailValue, setEmailValue] = React.useState('');
-
-  const handleSignup = () => {
-    fetch('http://192.168.1.206:5500/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer very-secure',
-      },
-      body: JSON.stringify({
-        email: emailValue,
-        password: passwordValue,
-        name: usernameValue,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 201) {
-          console.log(res);
-          return res.json();
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Invalid credentials. Please try again.',
-          });
-        }
-      })
-      .catch(function (error) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2:
-            'An error occurred while signing up. Try again in a few moments.',
-        });
-
-        throw error;
-      });
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.mainContainer}>
@@ -82,6 +45,8 @@ export default function SignUp() {
         value={passwordValue}
         setValue={setPasswordValue}
         style={styles.input}
+        type="password"
+        inputMode="text"
       />
 
       <MyButton
@@ -90,13 +55,12 @@ export default function SignUp() {
         style={{
           marginTop: 32,
         }}
-        onPress={handleSignup}
+        onPress={() => register(usernameValue, emailValue, passwordValue)}
       >
         Sign up
       </MyButton>
       <CustomText style={{ color: LIGHT_WHITE, marginTop: 16 }}>
-        Already have an account?{' '}
-        <Link href="/(drawer)/(tabs)/login">Log in.</Link>
+        Already have an account? <Link href="/login">Log in.</Link>
       </CustomText>
     </ScrollView>
   );
