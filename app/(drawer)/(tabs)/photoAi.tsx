@@ -13,13 +13,19 @@ import { useCntx } from '@/hooks/useAppContext';
 
 export default function Scan() {
   const { mathImage } = useCntx();
-
+  console.log(mathImage);
   const getUserId = async () => {
     const authToken = await AsyncStorage.getItem('access_token');
 
     if (!mathImage) return;
+
+    const filename: any = mathImage.split('/').pop();
     const formImageProblem = new FormData();
-    formImageProblem.append('files', mathImage);
+    formImageProblem.append('files', {
+      uri: mathImage,
+      name: filename,
+      type: 'image/jpeg',
+    });
 
     const sendImage = await fetch('http://192.168.1.117:5500/math-problems', {
       method: 'POST',

@@ -93,20 +93,9 @@ export default function User() {
         },
         body: form,
       });
-      Toast.show({
-        type: 'success',
-        text1: 'Success',
-        text2: 'Image successfully updated!',
-      });
-      setImage(null);
-      router.push('/(drawer)/(tabs)/');
     } catch (error) {
       console.error(error);
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: 'Error uploading image. Please try again.',
-      });
+      console.error(error);
     }
   };
 
