@@ -89,7 +89,7 @@ export default function Scan() {
     console.log(getImage);
 
     const getResponse = await fetch(
-      'http://192.168.1.206:5500/math-problems/' + getImage['id'],
+      'https://powerstudy-backend.vercel.app/math-problems/' + getImage['id'],
       {
         method: 'GET',
         headers: {
