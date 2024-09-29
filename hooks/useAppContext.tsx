@@ -2,12 +2,12 @@ import * as React from 'react';
 
 import { Cntx } from './context';
 
-export const AppContext = ({ children }) => {
+export const AppContext = ({ children }: any) => {
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [profilePicture, setProfilePicture] = React.useState('');
   const [id, setId] = React.useState('');
-
+  const [mathImage, setMathImage] = React.useState<string>('');
   return (
     <Cntx.Provider
       value={{
@@ -19,6 +19,8 @@ export const AppContext = ({ children }) => {
         setProfilePicture,
         id,
         setId,
+        mathImage,
+        setMathImage,
       }}
     >
       {children}
@@ -34,9 +36,10 @@ export const useCntx = () => {
   return context;
 };
 
-export const clearContext = (context) => {
+export const clearContext = (context: any) => {
   context.setUsername('');
   context.setEmail('');
   context.setProfilePicture('');
   context.setId('');
+  context.setMathImage('');
 };

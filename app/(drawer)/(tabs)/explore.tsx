@@ -1,8 +1,5 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import {
   StyleSheet,
-  Image,
-  Platform,
   ScrollView,
   View,
   TextInput,
@@ -10,7 +7,6 @@ import {
   Dimensions,
 } from 'react-native';
 
-import { ThemedView } from '@/components/ThemedView';
 import { CustomText } from '@/components/CustomText';
 import { BLACK, INDIGO, ROSE } from '@/constants/Colors';
 import { useState } from 'react';
