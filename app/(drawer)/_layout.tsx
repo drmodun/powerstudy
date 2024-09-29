@@ -120,6 +120,35 @@ export default function Layout() {
           ),
         }}
       />
+      <Drawer.Screen
+        name="{subject}"
+        options={{
+          headerShown: true,
+          header: () => (
+            <TouchableHighlight
+              onPress={() => router.back()}
+              underlayColor={ROSE}
+              style={{
+                marginTop: Constants.statusBarHeight + 8,
+                backgroundColor: INDIGO,
+                borderRadius: 8,
+                height: 64,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: 16,
+                marginHorizontal: 8,
+                width: 64,
+              }}
+            >
+              <View>
+                <MaterialIcons name="arrow-back" color="white" size={32} />
+              </View>
+            </TouchableHighlight>
+          ),
+        }}
+      />
     </Drawer>
   );
 }

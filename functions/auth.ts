@@ -95,3 +95,18 @@ export const signOut = async () => {
   router.dismissAll();
   router.replace('/login');
 };
+
+export const deleteUser = async (id: string, token: string) => {
+  let res = await fetch(`http://192.168.1.206:5500/users/` + id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  res = await res.json();
+  console.log(res);
+
+  await signOut();
+};

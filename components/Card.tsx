@@ -11,7 +11,7 @@ export const Card: React.FC<{
   iconStyle?: ViewStyle;
   text?: string;
   icon?: keyof typeof MaterialIcons.glyphMap;
-}> = ({ style, textStyle, iconStyle, text = '', icon = 'bug-report' }) => (
+}> = ({ style, textStyle, iconStyle, text = '', icon = '' }) => (
   <View style={[styles.wrapper, style]}>
     <CustomText style={[styles.text, textStyle]}>{text}</CustomText>
     <View style={styles.iconWrapper}>
