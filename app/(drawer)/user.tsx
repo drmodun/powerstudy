@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { router } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import Toast from 'react-native-toast-message';
@@ -16,59 +16,49 @@ import Toast from 'react-native-toast-message';
 import { INDIGO, ROSE } from '@/constants/Colors';
 import { CustomText } from '@/components/CustomText';
 import { MyInput } from '@/components/Input';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteUser } from '@/functions/auth';
 
 export default function User() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [image, setImage] = useState<string | null>(null);
+  const [username, setUsername] = useState(null);
+  const [username2, setUsername2] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [image, setImage] = useState(null);
+  const [image2, setImage2] = useState(null);
 
-  const condition = image || password || username;
+  let condition = image2 || password || username;
 
   // Unified function for API calls
-  const updateProfile = async (type: 'username' | 'password') => {
-    const data: {
-      name?: string;
-      password?: string;
-    } = {};
-    if (type === 'username' && username.length > 2) {
-      data.name = username;
-    } else if (type === 'password' && password.length > 7) {
-      data.password = password;
-    } else {
-      return;
-    }
+  const updateProfile = async () => {
+    const token = await AsyncStorage.getItem('access_token');
+    let data = {};
+    if (username) data['name'] = username;
+    if (password) data['password'] = password;
+    if (image2) data['profilePicture'] = image2;
 
-    try {
-      await fetch(`http://192.168.1.117:5500/users/{id}`, {
-        method: 'PATCH',
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzMsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE3Mjc2MDI1NzIsImV4cCI6MTcyNzY4ODk3Mn0.NAk-dnbMNaY9BzYBIllge6lYSt-vA5xs7wL7tkAE9Ys
-`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      Toast.show({
-        type: 'success',
-        text1: 'Success',
-        text2: `You have successfully changed your ${type}`,
-      });
-      setUsername('');
-      setPassword('');
-    } catch (error) {
-      console.error(error);
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: `An error occurred while updating your ${type}. Please try again.`,
-      });
-    }
+    console.log('DATAAA', data);
+
+    let response = await fetch('http://192.168.1.206:5500/users', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    response = await response.json();
+    console.log(response);
+    setImage2(null);
+    setUsername(null);
+    setPassword(null);
   };
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [1, 1],
       quality: 1,
     });
@@ -76,28 +66,42 @@ export default function User() {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+
+    uploadImage(result.assets[0].uri);
   };
 
-  const uploadImage = async () => {
-    if (!image) return;
+  const uploadImage = async (a) => {
+    const token = await AsyncStorage.getItem('access_token');
+    let localUri = a;
+    let filename = localUri.split('/').pop();
 
-    const form = new FormData();
-    form.append('files', image);
+    let formData = new FormData();
+    formData.append('files', {
+      uri: localUri,
+      name: filename,
+      type: 'image/jpeg',
+    });
+    const response = await fetch('http://192.168.1.206:5500/blob/images', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    try {
-      await fetch('http://192.168.1.117:5500/blob/images', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzMsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE3Mjc2MDI1NzIsImV4cCI6MTcyNzY4ODk3Mn0.NAk-dnbMNaY9BzYBIllge6lYSt-vA5xs7wL7tkAE9Ys`,
-          'Content-Type': 'multipart/form-data',
-        },
-        body: form,
-      });
-    } catch (error) {
-      console.error(error);
-      console.error(error);
-    }
+    let responseJson = await response.json();
+    setImage2(responseJson[0].fileUri);
+    console.log('idk', responseJson[0].fileUri);
   };
+  useEffect(() => {
+    const load = () => {
+      AsyncStorage.getItem('name').then((_name) => setUsername2(_name));
+      AsyncStorage.getItem('email').then((_email) => setEmail(_email));
+      AsyncStorage.getItem('image').then((_image) => setImage(_image));
+    };
+    load();
+  }, []);
 
   return (
     <SafeAreaView style={styles.wrapper}>
@@ -105,7 +109,9 @@ export default function User() {
         <View style={styles.userImgWrapper}>
           <Image
             source={{
-              uri: image ?? 'https://randomuser.me/api/portraits/women/26.jpg',
+              uri:
+                image ??
+                'https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2220431045.jpg',
             }}
             style={styles.userImg}
           />
@@ -116,8 +122,8 @@ export default function User() {
           </TouchableOpacity>
         </View>
         <View>
-          <CustomText style={styles.username}>username placeholder</CustomText>
-          <CustomText style={styles.email}>email placeholder</CustomText>
+          <CustomText style={styles.username}>{username2}</CustomText>
+          <CustomText style={styles.email}>{email}</CustomText>
         </View>
         <View style={styles.inputWrapper}>
           <MyInput
@@ -131,16 +137,29 @@ export default function User() {
             setValue={setPassword}
             placeholderValue="Enter your new password"
             value={password}
+            type={'password'}
           />
         </View>
       </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity
+          onPress={() => {
+            AsyncStorage.getItem('access_token').then((token) => {
+              AsyncStorage.getItem('id').then((id) => {
+                id && token && deleteUser(id, token);
+              });
+            });
+          }}
+          style={[styles.button, { backgroundColor: 'red', marginBottom: 8 }]}
+        >
+          <CustomText style={[styles.buttonText, { color: 'white' }]}>
+            Delete user account
+          </CustomText>
+        </TouchableOpacity>
+        <TouchableOpacity
           disabled={!condition}
           onPress={() => {
-            if (image) uploadImage();
-            if (username) updateProfile('username');
-            if (password) updateProfile('password');
+            updateProfile();
           }}
           style={[
             styles.button,

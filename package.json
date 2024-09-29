@@ -21,6 +21,7 @@
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.0.2",
     "@types/react-native": "~0.70.6",
+    "axios": "^1.7.7",
     "expo": "~51.0.28",
     "expo-build-properties": "~0.12.5",
     "expo-camera": "~15.0.16",
