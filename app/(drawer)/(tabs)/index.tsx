@@ -16,13 +16,16 @@ export default function HomeScreen() {
 
       if (!authToken) signOut();
 
-      let res: any = await fetch('http://192.168.1.117:5500/auth/me', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      let res: any = await fetch(
+        'https://powerstudy-backend.vercel.app/auth/me',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
       res = await res.json();
       console.log(res);
 
@@ -33,7 +36,7 @@ export default function HomeScreen() {
         context.setEmail(res['email']);
 
         let res2: any = await fetch(
-          `http://192.168.1.117:5500/users/${res['id']}`,
+          `https://powerstudy-backend.vercel.app/users/${res['id']}`,
           {
             method: 'GET',
             headers: {

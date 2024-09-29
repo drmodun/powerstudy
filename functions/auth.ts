@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
 
 export const handleLogin = (email: string, password: string) => {
-  fetch('http://192.168.1.117:5500/auth/login', {
+  fetch('https://powerstudy-backend.vercel.app/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const register = async (
   email: string,
   password: string
 ) => {
-  fetch('http://192.168.1.117:5500/users', {
+  fetch('https://powerstudy-backend.vercel.app/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ export const signOut = async () => {
 };
 
 export const deleteUser = async (id: string, token: string) => {
-  let res = await fetch(`http://192.168.1.206:5500/users/` + id, {
+  let res = await fetch(`https://powerstudy-backend.vercel.app/users/` + id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

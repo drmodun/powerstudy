@@ -39,14 +39,17 @@ export default function User() {
 
     console.log('DATAAA', data);
 
-    let response = await fetch('http://192.168.1.206:5500/users', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
+    let response = await fetch(
+      'http://https://powerstudy-backend.vercel.app/users',
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     response = await response.json();
     console.log(response);
@@ -81,14 +84,17 @@ export default function User() {
       name: filename,
       type: 'image/jpeg',
     });
-    const response = await fetch('http://192.168.1.206:5500/blob/images', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      'https://powerstudy-backend.vercel.app/blob/images',
+      {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     let responseJson = await response.json();
     setImage2(responseJson[0].fileUri);

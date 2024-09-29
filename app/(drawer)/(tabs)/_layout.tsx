@@ -5,7 +5,7 @@ import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { INDIGO, LIGHT_PURPLE, ROSE } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { DrawerToggleButton } from '@react-navigation/drawer';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 const imagePath = require('../../../assets/images/mini_fullwhite.png');
 import Constants from 'expo-constants';
@@ -71,10 +71,12 @@ export default function TabLayout() {
             <TabBarIcon
               name={'home'}
               color={focused ? 'white' : LIGHT_PURPLE}
+              style={{}}
             />
           ),
         }}
       />
+
       <Tabs.Screen
         name="explore"
         options={{
@@ -94,6 +96,18 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={'camera'}
+              color={focused ? 'white' : LIGHT_PURPLE}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notes/index"
+        options={{
+          title: 'Notes',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={'note'}
               color={focused ? 'white' : LIGHT_PURPLE}
             />
           ),
