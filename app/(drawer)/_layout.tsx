@@ -23,7 +23,7 @@ const CustomDrawerContent = (props) => {
           source={{
             uri: !context.profilePicture
               ? 'https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2220431045.jpg'
-              : profilePicture,
+              : context.profilePicture,
           }}
           width={80}
           height={80}
