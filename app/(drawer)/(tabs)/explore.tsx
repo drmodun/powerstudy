@@ -12,7 +12,7 @@ import {
 
 import { ThemedView } from '@/components/ThemedView';
 import { CustomText } from '@/components/CustomText';
-import { INDIGO, ROSE } from '@/constants/Colors';
+import { BLACK, INDIGO, ROSE } from '@/constants/Colors';
 import { useState } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -45,7 +45,7 @@ export default function TabTwoScreen() {
             onPress={() => setText(query)}
           >
             <View style={styles.send}>
-              <MaterialIcons name="send" size={24} color={'white'} />
+              <MaterialIcons name="send" size={24} color="white" />
             </View>
           </TouchableHighlight>
         </View>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   input: {
-    borderColor: ROSE,
+    borderColor: 'white',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 16,
@@ -99,12 +99,14 @@ const styles = StyleSheet.create({
   },
   send: {
     width: 64,
-    backgroundColor: ROSE,
+    backgroundColor: BLACK,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: 64,
     borderRadius: 8,
+    borderColor: 'white',
+    borderWidth: 1,
   },
   sendWrapper: {
     borderRadius: 8,

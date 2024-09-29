@@ -1,23 +1,29 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  Theme,
-  ThemeProvider,
-} from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+import { Theme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
 import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { BLACK, INDIGO, ROSE } from '@/constants/Colors';
+import Toast from 'react-native-toast-message';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  Outfit_400Regular,
+  Outfit_500Medium,
+  Outfit_700Bold,
+  Outfit_900Black,
+  useFonts,
+} from '@expo-google-fonts/outfit';
+import { View } from 'react-native';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  let [fontsLoaded] = useFonts({
+    Outfit_400Regular,
+    Outfit_500Medium,
+    Outfit_700Bold,
+    Outfit_900Black,
+  });
   const MyTheme: Theme = {
     dark: true,
     colors: {
@@ -30,6 +36,10 @@ export default function RootLayout() {
     },
   };
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <ThemeProvider value={MyTheme}>
       <Stack>
@@ -41,6 +51,7 @@ export default function RootLayout() {
         />
         <Stack.Screen name="+not-found" />
       </Stack>
+      <Toast />
     </ThemeProvider>
   );
 }

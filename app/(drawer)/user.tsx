@@ -10,7 +10,6 @@ import {
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-
 // Components
 import { INDIGO, LIGHT_PURPLE, PURPLE, ROSE } from '@/constants/Colors';
 import { CustomText } from '@/components/CustomText';
@@ -35,6 +34,36 @@ export default function user() {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+
+    console.log('WERE GOING DOWN DOWN');
+
+    await uploadImage(result.assets[0].uri);
+
+    console.log('done');
+  };
+
+  const uploadImage = async (_image) => {
+    if (!_image) return;
+
+    console.log('IMAGE IS GOOD', _image);
+
+    const form = new FormData();
+    form.append('files', _image);
+
+    fetch('http://192.168.1.206:5500/blob/images', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer $AUTHENTICATION_TOKEN`,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: form,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+
+    console.log('MEGA DONE');
   };
 
   return (

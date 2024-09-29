@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Link } from 'expo-router';
+import Toast from 'react-native-toast-message';
 
 // Components and variables
 import { FONT_BASE, FONT_MD, FONT_XL } from '@/constants/FontSizes';
@@ -12,7 +13,48 @@ import { MyButton } from '@/components/Button';
 import { MyInput } from '@/components/Input';
 
 export default function SignUp() {
-  const [inputValue, setInputValue] = React.useState('');
+  const [usernameValue, setUsernameValue] = React.useState('');
+  const [passwordValue, setPasswordValue] = React.useState('');
+  const [emailValue, setEmailValue] = React.useState('');
+
+  const handleSignup = () => {
+    fetch('http://192.168.1.206:5500/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer very-secure',
+      },
+      body: JSON.stringify({
+        email: emailValue,
+        password: passwordValue,
+        name: usernameValue,
+      }),
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 201) {
+          console.log(res);
+          return res.json();
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'Invalid credentials. Please try again.',
+          });
+        }
+      })
+      .catch(function (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2:
+            'An error occurred while signing up. Try again in a few moments.',
+        });
+
+        throw error;
+      });
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.mainContainer}>
       <CustomText style={{ fontSize: FONT_XL, height: 48 }}>Sign up</CustomText>
@@ -23,22 +65,22 @@ export default function SignUp() {
       <MyInput
         label="Username"
         placeholderValue="Enter your username"
-        value={inputValue}
-        setValue={setInputValue}
+        value={usernameValue}
+        setValue={setUsernameValue}
         style={styles.input}
       />
       <MyInput
         label="Email"
         placeholderValue="Enter your email"
-        value={inputValue}
-        setValue={setInputValue}
+        value={emailValue}
+        setValue={setEmailValue}
         style={styles.input}
       />
       <MyInput
         label="Password"
         placeholderValue="Enter your password"
-        value={inputValue}
-        setValue={setInputValue}
+        value={passwordValue}
+        setValue={setPasswordValue}
         style={styles.input}
       />
 
@@ -48,13 +90,13 @@ export default function SignUp() {
         style={{
           marginTop: 32,
         }}
-        onPress={() => console.log('Hello world')}
+        onPress={handleSignup}
       >
-        Log in
+        Sign up
       </MyButton>
       <CustomText style={{ color: LIGHT_WHITE, marginTop: 16 }}>
         Already have an account?{' '}
-        <Link href="/(drawer)/(tabs)/signup">Log in.</Link>
+        <Link href="/(drawer)/(tabs)/login">Log in.</Link>
       </CustomText>
     </ScrollView>
   );
