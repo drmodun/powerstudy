@@ -13,6 +13,7 @@ import {
   useFonts,
 } from '@expo-google-fonts/outfit';
 import { View } from 'react-native';
+import { AppContext } from '@/hooks/useAppContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -41,17 +42,21 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={MyTheme}>
-      <Stack>
-        <Stack.Screen
-          name="(drawer)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <Toast />
-    </ThemeProvider>
+    <AppContext>
+      <ThemeProvider value={MyTheme}>
+        <Stack>
+          <Stack.Screen
+            name="(drawer)"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+          <Stack.Screen name="login" options={{ headerShown: false }} />
+          <Stack.Screen name="signup" options={{ headerShown: false }} />
+        </Stack>
+        <Toast />
+      </ThemeProvider>
+    </AppContext>
   );
 }
