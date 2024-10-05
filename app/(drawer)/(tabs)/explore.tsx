@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import { Divider } from 'react-native-paper';
 import * as React from 'react';
 import { CustomText } from '@/components/CustomText';
@@ -20,7 +21,7 @@ import Markdown from 'react-native-markdown-display';
 export default function TabTwoScreen() {
   const [query, setQuery] = React.useState('');
   const [data, setData] = React.useState<any>([]);
-  const [check, setCheck] = React.useState<any>('');
+
   const [startQuestion, setStartQuestion] = React.useState(false);
 
   React.useEffect(() => {
@@ -43,8 +44,6 @@ export default function TabTwoScreen() {
     getConversation();
   }, []);
 
-  if (check) console.log(check);
-  console.log(query);
   const askQuestion = async () => {
     setStartQuestion(true);
     const authToken = await AsyncStorage.getItem('access_token');
@@ -73,13 +72,16 @@ export default function TabTwoScreen() {
         }
       );
       const answerResponse = await getDesiresdResponse.json();
-      setCheck(answerResponse);
       setData((prevData: any) => [...prevData, answerResponse]);
     } catch (error) {
-      console.error(error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Uhoh, something went wrong please try ag',
+      });
     } finally {
       setStartQuestion(false);
-      // setQuery('');
+      setQuery('');
     }
   };
 
